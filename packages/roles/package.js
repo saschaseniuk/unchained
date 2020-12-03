@@ -1,6 +1,6 @@
 Package.describe({
   name: 'unchained:roles',
-  version: '0.54.1',
+  version: '0.55.2',
   summary: 'Unchained Engine: Roles',
   git: 'https://github.com/unchainedshop/unchained',
   documentation: 'README.md',
@@ -11,12 +11,12 @@ Package.onUse((api) => {
 
   api.use([
     'meteor-base',
-    'accounts-base',
     'check',
     'mongo',
     'ecmascript',
     'underscore',
     'dburles:collection-helpers@1.1.0',
+    'unchained:core-users@0.55.2',
   ]);
 
   api.addFiles(['helpers.js', 'roles.js', 'keys.js']);

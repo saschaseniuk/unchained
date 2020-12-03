@@ -10,7 +10,7 @@ import withFormSchema from '../../lib/withFormSchema';
 import withFormErrorHandlers from '../../lib/withFormErrorHandlers';
 
 const FormSetPassword = ({
-  resendVerification,
+  sendVerification,
   verified,
   mutate,
   client,
@@ -28,7 +28,7 @@ export default compose(
   withApollo,
   graphql(gql`
     mutation setPassword($newPassword: String!, $userId: ID!) {
-      setPassword(newPassword: $newPassword, userId: $userId) {
+      setPassword(newPlainPassword: $newPassword, userId: $userId) {
         _id
       }
     }

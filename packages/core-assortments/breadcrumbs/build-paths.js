@@ -15,9 +15,15 @@ const walkAssortmentLinks = (resolveAssortmentLink) => async (
     );
 
     if (subAsssortmentLinks.length > 0) {
-      return subAsssortmentLinks.map((subAsssortmentLink) => {
-        return [...subAsssortmentLink.flat(), assortmentLink, ...initialPaths];
-      });
+      return subAsssortmentLinks
+        .map((subAsssortmentLink) => {
+          return subAsssortmentLink.map((subSubLinks) => [
+            ...subSubLinks,
+            assortmentLink,
+            ...initialPaths,
+          ]);
+        })
+        .flat();
     }
     return [[assortmentLink, ...initialPaths]];
   };

@@ -66,7 +66,7 @@ export default [
       """
       Send an email with a link the user can use verify their email address.
       """
-      resendVerificationEmail(email: String): SuccessResponse
+      sendVerificationEmail(email: String): SuccessResponse
 
       """
       Login as Guest User (creates an anonymous user and returns logged in token)
@@ -188,7 +188,7 @@ export default [
         payment: SubscriptionPaymentInput
         delivery: SubscriptionDeliveryInput
         meta: JSON
-      ): Order!
+      ): Subscription!
 
       """
       Activate a subscription by changing the status to ACTIVE
@@ -313,8 +313,14 @@ export default [
       enrollUser(
         profile: UserProfileInput!
         email: String!
-        password: String
+        password: HashedPasswordInput
+        plainPassword: String
       ): User
+
+      """
+      Send the enrollment email for a user as enrollUser doesn't send it out by default
+      """
+      sendEnrollmentEmail(email: String!): SuccessResponse
 
       """
       Set username for a specific user
@@ -324,7 +330,11 @@ export default [
       """
       Set a new password for a specific user
       """
-      setPassword(newPassword: String!, userId: ID!): User
+      setPassword(
+        newPassword: HashedPasswordInput
+        newPlainPassword: String
+        userId: ID!
+      ): User
 
       """
       Set roles of a user
@@ -884,7 +894,7 @@ export default [
       ): PaymentCredentials
 
       """
-      Deletes the specified payment credential
+      Deletes the specified payment credential.
       """
       removePaymentCredentials(paymentCredentialsId: ID!): PaymentCredentials
     }
