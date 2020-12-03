@@ -4,7 +4,7 @@ import {
   createAnonymousGraphqlFetch,
 } from './helpers';
 import { ADMIN_TOKEN } from './seeds/users';
-import { JpegProductMedia } from './seeds/products';
+import { JpegProductMedia, SimpleProduct } from './seeds/products';
 
 let connection;
 let graphqlFetch;
@@ -238,6 +238,27 @@ describe('ProductsVariation', () => {
       });
 
       expect(errors.length).toEqual(1);
+    });
+  });
+
+  describe('mutation.addProductMedia for admin user should', () => {
+    it('add product media successfully when provided valid media ID', async () => {
+      const { data: { addProductMedia } = {} } = await graphqlFetch({
+        query: /* GraphQL */ `
+          mutation addProductMedia($href: String!, $productId: ID!) {
+            addProductMedia(href: $href, productId: $productId) {
+              _id
+              tags
+            }
+          }
+        `,
+        variables: {
+          href:
+            'https://assets-cdn.github.com/images/modules/logos_page/Octocat.png',
+          productId: SimpleProduct._id,
+        },
+      });
+      expect(addProductMedia._id).not.toBe(SimpleProduct._id);
     });
   });
 

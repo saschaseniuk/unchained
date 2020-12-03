@@ -9,23 +9,26 @@ export default function updateUserAvatar(
 ) {
   const normalizedUserId = foreignUserId || userId;
   log(`mutation updateUserAvatar ${normalizedUserId}`, { userId });
-  const avatarRef =
-    avatar instanceof Promise
-      ? Promise.await(
-          Avatars.insertWithRemoteFile({
-            file: avatar,
-            userId: normalizedUserId,
-          })
-        )
-      : Promise.await(
-          Avatars.insertWithRemoteBuffer({
-            file: {
-              ...avatar,
-              buffer: Buffer.from(avatar.buffer, 'base64'),
-            },
-            userId: normalizedUserId,
-          })
-        );
+  let avatarRef;
+  if (avatar.buffer) {
+    avatarRef = Promise.await(
+      Avatars.insertWithRemoteBuffer({
+        file: {
+          ...avatar,
+          buffer: Buffer.from(avatar.buffer, 'base64'),
+        },
+        userId: normalizedUserId,
+      })
+    );
+  } else {
+    avatarRef = Promise.await(
+      Avatars.insertWithRemoteFile({
+        file: avatar,
+        userId: normalizedUserId,
+      })
+    );
+  }
+
   Users.update(
     { _id: normalizedUserId },
     {

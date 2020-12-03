@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
-import { setupDatabase, createLoggedInGraphqlFetch } from './helpers';
 import { Admin, ADMIN_TOKEN, User } from './seeds/users';
+import { setupDatabase, createLoggedInGraphqlFetch } from './helpers';
 
 let connection;
 let db;
@@ -139,7 +139,7 @@ describe('Auth for admin users', () => {
   });
 
   describe('Mutation.updateUserAvatar', () => {
-    it('update the avatar of a foreign user', async () => {
+    it('update the avatar of a foreign user using buffer', async () => {
       const imageResult = await fetch(
         'https://assets-cdn.github.com/images/modules/logos_page/Octocat.png',
       );
@@ -150,7 +150,6 @@ describe('Auth for admin users', () => {
         size: imageBuffer.length,
         buffer: imageBuffer.toString('base64'),
       };
-
       const { data: { updateUserAvatar } = {} } = await graphqlFetch({
         query: /* GraphQL */ `
           mutation updateUserAvatar($userId: ID, $avatar: Upload!) {
