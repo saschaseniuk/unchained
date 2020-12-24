@@ -1,6 +1,6 @@
 Package.describe({
   name: 'unchained:core-files',
-  version: '0.55.2',
+  version: '0.55.4',
   summary: 'Unchained Engine Core: Files',
   git: 'https://github.com/unchainedshop/unchained',
   documentation: 'README.md',
@@ -22,7 +22,7 @@ Package.onUse((api) => {
     ['mongo', 'check', 'random', 'ecmascript', 'ostrio:cookies@2.6.1'],
     ['client', 'server']
   );
-  api.use('unchained:core-settings@0.55.2');
+  api.use('unchained:core-settings@0.55.4');
   api.mainModule('core-files.js');
   api.export('FilesCollection');
 });

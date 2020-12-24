@@ -404,7 +404,7 @@ describe('Products', () => {
   });
 
   describe('Mutation.updateProductPlan for admin user should', () => {
-    it('update product plan successfuly', async () => {
+    it('update product plan successfuly when passed PLAN_PRODUCT type', async () => {
       const { data: { updateProductPlan } = {} } = await graphqlFetchAsAdmin({
         query: /* GraphQL */ `
           mutation updateProductPlan(
@@ -470,6 +470,37 @@ describe('Products', () => {
           trialInterval: 'WEEK',
           trialIntervalCount: 2,
         },
+      });
+    });
+
+    it('return error when passed non PLAN_PRODUCT type', async () => {
+      const { errors } = await graphqlFetchAsAdmin({
+        query: /* GraphQL */ `
+          mutation updateProductPlan(
+            $productId: ID!
+            $plan: UpdateProductPlanInput!
+          ) {
+            updateProductPlan(productId: $productId, plan: $plan) {
+              _id
+            }
+          }
+        `,
+        variables: {
+          productId: SimpleProduct._id,
+          plan: {
+            usageCalculationType: 'METERED',
+            billingInterval: 'MONTH',
+            billingIntervalCount: 1,
+            trialInterval: 'WEEK',
+            trialIntervalCount: 2,
+          },
+        },
+      });
+
+      expect(errors?.[0]?.extensions).toMatchObject({
+        code: 'ProductWrongStatusError',
+        received: SimpleProduct.type,
+        required: 'PLAN_PRODUCT',
       });
     });
 
@@ -639,6 +670,118 @@ describe('Products', () => {
       });
 
       expect(product._id).toEqual('simpleproduct');
+    });
+
+    it('return product price with the default price when no argument is passed to simulatedPrice  of SIMPLE_PRODUCT type', async () => {
+      const {
+        data: { product },
+      } = await graphqlFetchAsAdmin({
+        query: /* GraphQL */ `
+          query product($productId: ID, $slug: String) {
+            product(productId: $productId, slug: $slug) {
+              _id
+              ... on SimpleProduct {
+                simulatedPrice {
+                  _id
+                  price {
+                    amount
+                    currency
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          productId: 'simpleproduct',
+        },
+      });
+
+      expect(product?.simulatedPrice?.price?.currency).toEqual('CHF');
+    });
+
+    it('return null when passed unsupported currency to simulatedPrice of SIMPLE_PRODUCT type', async () => {
+      const {
+        data: { product },
+      } = await graphqlFetchAsAdmin({
+        query: /* GraphQL */ `
+          query product($productId: ID, $slug: String) {
+            product(productId: $productId, slug: $slug) {
+              _id
+              ... on SimpleProduct {
+                simulatedPrice(currency: "ETB") {
+                  _id
+                  price {
+                    amount
+                    currency
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          productId: 'simpleproduct',
+        },
+      });
+
+      expect(product?.simulatedPrice).toBe(null);
+    });
+
+    it('return product price with the default price when no argument is passed to simulatedPrice  of PLAN_PRODUCT type', async () => {
+      const {
+        data: { product },
+      } = await graphqlFetchAsAdmin({
+        query: /* GraphQL */ `
+          query product($productId: ID, $slug: String) {
+            product(productId: $productId, slug: $slug) {
+              _id
+              ... on PlanProduct {
+                simulatedPrice {
+                  _id
+                  price {
+                    amount
+                    currency
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          productId: 'plan-product',
+        },
+      });
+
+      expect(product?.simulatedPrice?.price?.currency).toEqual('CHF');
+    });
+
+    it('return null when passed unsupported currency to simulatedPrice of PLAN_PRODUCT type', async () => {
+      const {
+        data: { product },
+      } = await graphqlFetchAsAdmin({
+        query: /* GraphQL */ `
+          query product($productId: ID, $slug: String) {
+            product(productId: $productId, slug: $slug) {
+              _id
+              ... on PlanProduct {
+                simulatedPrice(currency: "ETB") {
+                  _id
+                  price {
+                    amount
+                    currency
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          productId: 'plan-product',
+        },
+      });
+
+      expect(product?.simulatedPrice).toBe(null);
     });
 
     it('return single product specified by id with single media file', async () => {
