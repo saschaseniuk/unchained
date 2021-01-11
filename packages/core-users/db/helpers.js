@@ -9,7 +9,7 @@ import { log, Logs } from 'meteor/unchained:core-logger';
 import { v4 as uuidv4 } from 'uuid';
 import { Avatars, Users } from './collections';
 
-Logs.helpers({
+/* Logs.helpers({
   user() {
     return (
       this.meta &&
@@ -18,7 +18,7 @@ Logs.helpers({
       })
     );
   },
-});
+}); */
 
 Users.setTags = ({ userId, tags }) => {
   Users.update(
