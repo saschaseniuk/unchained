@@ -11,19 +11,15 @@ Npm.depends({
   'fs-extra': '9.0.1',
   'request-libcurl': '2.2.1',
   'file-type': '16.0.0',
-  eventemitter3: '4.0.7',
   mongodb: '3.6.3',
   '@reactioncommerce/random': '1.0.2',
 });
 
 Package.onUse((api) => {
   api.versionsFrom('1.11.1');
-  api.use('ecmascript');
   api.use('webapp', 'server');
-  api.use(
-    ['mongo', 'check', 'ecmascript', 'ostrio:cookies@2.6.1'],
-    ['client', 'server']
-  );
+  api.use(['mongo', 'ecmascript'], ['client', 'server']);
+
   api.use('unchained:core-settings@0.55.4');
   api.mainModule('core-files.js');
   api.export('FilesCollection');
