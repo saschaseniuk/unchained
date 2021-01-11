@@ -95,7 +95,7 @@ Subscriptions.helpers({
   },
 });
 
-/* Logs.helpers({
+Logs.helpers({
   order() {
     return (
       this.meta &&
@@ -105,7 +105,7 @@ Subscriptions.helpers({
     );
   },
 });
- */
+
 Users.helpers({
   async cart({ countryContext, orderNumber } = {}) {
     const selector = {

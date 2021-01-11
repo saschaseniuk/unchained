@@ -13,7 +13,7 @@ import { QuotationDocuments } from '../quotation-documents/collections';
 import { QuotationStatus } from './schema';
 import { QuotationDirector } from '../../director';
 
-/* Logs.helpers({
+Logs.helpers({
   quotation() {
     return (
       this.meta &&
@@ -22,7 +22,7 @@ import { QuotationDirector } from '../../director';
       })
     );
   },
-}); */
+});
 
 Users.helpers({
   quotations() {
