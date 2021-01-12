@@ -517,11 +517,6 @@ export default [
       updateLanguage(language: UpdateLanguageInput!, languageId: ID!): Language!
 
       """
-      Make’s the language provided as the base  and make any other existing base language regular.
-      """
-      setBaseLanguage(languageId: ID!): Language!
-
-      """
       Deletes the specified languages
       """
       removeLanguage(languageId: ID!): Language!
@@ -532,11 +527,6 @@ export default [
       Updates provided country information
       """
       updateCountry(country: UpdateCountryInput!, countryId: ID!): Country!
-
-      """
-      Make’s the country provided as the base  and make any other existing base country regular.
-      """
-      setBaseCountry(countryId: ID!): Country!
 
       """
       Deletes the specified country
