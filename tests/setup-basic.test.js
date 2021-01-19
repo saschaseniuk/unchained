@@ -10,7 +10,10 @@ describe('basic setup of internationalization and localization context', () => {
   beforeAll(async () => {
     [db, connection] = await setupDatabase();
     graphqlFetch = await createLoggedInGraphqlFetch(USER_TOKEN);
-    adminGraphqlFetch = await createLoggedInGraphqlFetch(ADMIN_TOKEN);
+    adminGraphqlFetch = await createLoggedInGraphqlFetch(ADMIN_TOKEN, {
+      'accept-language': 'de',
+      'x-shop-country': 'CH',
+    });
   });
 
   afterAll(async () => {
@@ -812,6 +815,7 @@ describe('basic setup of internationalization and localization context', () => {
           }
         `,
       });
+
       expect(shopInfo).toMatchObject({
         _id: 'root',
         language: {
