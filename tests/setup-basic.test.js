@@ -1,13 +1,16 @@
 import { setupDatabase, createLoggedInGraphqlFetch } from './helpers';
+import { ADMIN_TOKEN, USER_TOKEN } from './seeds/users';
 
 let connection;
 let db;
 let graphqlFetch;
+let adminGraphqlFetch;
 
 describe('basic setup of internationalization and localization context', () => {
   beforeAll(async () => {
     [db, connection] = await setupDatabase();
-    graphqlFetch = await createLoggedInGraphqlFetch();
+    graphqlFetch = await createLoggedInGraphqlFetch(USER_TOKEN);
+    adminGraphqlFetch = await createLoggedInGraphqlFetch(ADMIN_TOKEN);
   });
 
   afterAll(async () => {
@@ -789,7 +792,7 @@ describe('basic setup of internationalization and localization context', () => {
     it('global shop context', async () => {
       const {
         data: { shopInfo },
-      } = await graphqlFetch({
+      } = await adminGraphqlFetch({
         query: /* GraphQL */ `
           query {
             shopInfo {

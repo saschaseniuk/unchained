@@ -63,6 +63,10 @@ export const UserSchema = new SimpleSchema(
     roles: Array,
     'roles.$': String,
     ...timestampFields,
+    language: Object,
+    'language.isoCode': String,
+    country: Object,
+    'country.isoCode': String,
   },
   { requiredByDefault: false }
 );
@@ -206,6 +210,7 @@ export default () => {
     },
     {
       name: 'user_fulltext_search',
+      language_override: 'dummy',
     }
   );
 };

@@ -28,6 +28,12 @@ export default async () => {
         addressLine2: 'Bole 908',
         regionCode: 'false',
       },
+      language: {
+        isoCode: 'de',
+      },
+      country: {
+        isoCode: 'CH',
+      },
     });
     await admin.setPassword(hashPassword('password'));
 
