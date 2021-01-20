@@ -318,7 +318,15 @@ Products.helpers({
       ...mediaData,
     });
   },
-  addMedia({ rawFile, href, name, authorId, meta, tags = [], ...options }) {
+  async addMedia({
+    rawFile,
+    href,
+    name,
+    authorId,
+    meta,
+    tags = [],
+    ...options
+  }) {
     const fileLoader = rawFile
       ? Media.insertWithRemoteFile({
           file: rawFile,
@@ -330,7 +338,7 @@ Products.helpers({
           userId: authorId,
           ...options,
         });
-    const file = Promise.await(fileLoader);
+    const file = await fileLoader;
     return this.addMediaLink({
       mediaId: file._id,
       tags,
