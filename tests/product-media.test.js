@@ -409,8 +409,7 @@ describe('ProductsVariation', () => {
           }
         `,
         variables: {
-          href:
-            'https://assets-cdn.github.com/images/modules/logos_page/Octocat.png',
+          href: 'https://unchained.shop/img/veloplus-screenshots.png',
           productId: SimpleProduct._id,
         },
       });

@@ -42,7 +42,7 @@ export default [
     type ProductMedia {
       _id: ID!
       tags: [String!]
-      file: Media!
+      file: Media
       sortKey: Int!
       texts(forceLocale: String): ProductMediaTexts
     }
