@@ -239,19 +239,6 @@ describe('basic setup of internationalization and localization context', () => {
       await Currencies.deleteOne({ _id: 'sigt' });
     });
 
-    it('query.currency return not found error when passed non existing ID', async () => {
-      const { errors } = await graphqlFetch({
-        query: /* GraphQL */ `
-          query {
-            currency(currencyId: "etb") {
-              isoCode
-            }
-          }
-        `,
-      });
-      expect(errors[0]?.extensions?.code).toEqual('CurrencyNotFoundError');
-    });
-
     it('query.currency return error when passed invalid ID', async () => {
       const { errors } = await graphqlFetch({
         query: /* GraphQL */ `
@@ -499,19 +486,6 @@ describe('basic setup of internationalization and localization context', () => {
       await Countries.deleteOne({ _id: 'de' });
     });
 
-    it('query.country return not found when passed non existing ID', async () => {
-      const { errors } = await adminGraphqlFetch({
-        query: /* GraphQL */ `
-          query {
-            country(countryId: "et") {
-              isoCode
-            }
-          }
-        `,
-      });
-      expect(errors[0]?.extensions?.code).toEqual('CountryNotFoundError');
-    });
-
     it('query.country return error when passed invalid ID', async () => {
       const { errors } = await adminGraphqlFetch({
         query: /* GraphQL */ `
@@ -741,20 +715,6 @@ describe('basic setup of internationalization and localization context', () => {
         isoCode: 'pl',
       });
       await Languages.deleteOne({ _id: 'pl' });
-    });
-
-    it('query.language return not found error when passed non existing languageId', async () => {
-      const { data: { language } = {}, errors } = await adminGraphqlFetch({
-        query: /* GraphQL */ `
-          query {
-            language(languageId: "amh") {
-              isoCode
-            }
-          }
-        `,
-      });
-      expect(language).toEqual(null);
-      expect(errors[0]?.extensions?.code).toEqual('LanguageNotFoundError');
     });
 
     it('query.language return error when passed invalid languageId', async () => {
