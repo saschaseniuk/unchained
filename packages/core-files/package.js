@@ -18,9 +18,10 @@ Package.onUse((api) => {
   api.versionsFrom('1.11.1');
   api.use('webapp', 'server');
   api.use(['mongo', 'ecmascript'], ['client', 'server']);
+  api.use('typescript');
 
   api.use('unchained:core-settings@0.55.4');
-  api.mainModule('core-files.js');
+  api.mainModule('core-files.ts');
   api.export('FilesCollection');
 });
 
