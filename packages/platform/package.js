@@ -1,9 +1,15 @@
 Package.describe({
   name: 'unchained:platform',
-  version: '0.55.6',
+  version: '0.60.0',
   summary: 'Unchained Engine',
   git: 'https://github.com/unchainedshop/unchained',
   documentation: 'README.md',
+});
+
+Npm.depends({
+  moniker: '0.1.2',
+  'lodash.clonedeep': '4.5.0',
+  open: '7.3.1',
 });
 
 Package.onUse((api) => {
@@ -14,8 +20,8 @@ Package.onUse((api) => {
   api.use('email');
   api.use('percolate:migrations@1.0.2');
 
-  api.use('unchained:core@0.55.4');
-  api.use('unchained:api@0.55.5');
+  api.use('unchained:core@0.60.0');
+  api.use('unchained:api@0.60.0');
 
   api.mainModule('platform.js', 'server');
 });

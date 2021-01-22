@@ -1,6 +1,6 @@
 Package.describe({
   name: 'unchained:core-countries',
-  version: '0.55.4',
+  version: '0.60.0',
   summary: 'Unchained Engine Core: Countries',
   git: 'https://github.com/unchainedshop/unchained',
   documentation: 'README.md',
@@ -8,6 +8,8 @@ Package.describe({
 
 Npm.depends({
   'lru-cache': '6.0.0',
+  'emoji-flags': '1.3.0',
+  'i18n-iso-countries': '6.4.0',
 });
 
 Package.onUse((api) => {
@@ -16,8 +18,8 @@ Package.onUse((api) => {
   api.use('mongo');
   api.use('dburles:collection-helpers@1.1.0');
   api.use('aldeed:collection2@3.2.1');
-  api.use('unchained:utils@0.55.4');
-  api.use('unchained:core-currencies@0.55.4');
+  api.use('unchained:utils@0.60.0');
+  api.use('unchained:core-currencies@0.60.0');
 
   api.mainModule('countries.js', 'server');
 });
