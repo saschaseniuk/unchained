@@ -11,7 +11,7 @@ import hashPassword from './hashPassword';
 import getCart from './getCart';
 import evaluateContext from './evaluateContext';
 import filterContext from './filterContext';
-import instantiateLoaders, { UnchainedServerLoaders } from './loaders/index.ts';
+import instantiateLoaders, { UnchainedServerLoaders } from './loaders/index';
 
 export { hashPassword, getCart, evaluateContext, filterContext };
 export * as roles from './roles';
